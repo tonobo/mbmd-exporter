@@ -1,0 +1,34 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ethon (0.15.0)
+      ffi (>= 1.15.0)
+    ffi (1.15.4)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
+    oj (3.13.9)
+    rack (2.2.3)
+    rack-protection (2.1.0)
+      rack
+    ruby2_keywords (0.0.5)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
+    tilt (2.0.10)
+    typhoeus (1.4.0)
+      ethon (>= 0.9.0)
+    webrick (1.7.0)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  oj
+  sinatra
+  typhoeus
+  webrick
+
+BUNDLED WITH
+   2.2.32

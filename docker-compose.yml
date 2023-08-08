@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  mbmd:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - /run/udev:/run/udev:ro
+    command:
+      - mbmd
+      - run 
+      - -a=/dev/ttyUSB1
+      - --comset=8E1
+      - -b=9600
+      - --api=0.0.0.0:9191
+      - -d=SDM230:1
+      - -d=ORNO3p:2
+      - -d=ORNO3p:3
+      - -d=ORNO1p:4
+      - -d=ORNO3p:20
+      - -d=SDM230:21
+      - -d=ORNO3p:22
+    labels:
+      - "traefik.enable=true"
+      - 'traefik.http.routers.mbmd.rule=Host(`internal.mbmd.klaut.io`)'
+      - 'traefik.http.services.mbmd.loadbalancer.server.port=9191'
+      - "traefik.http.routers.mbmd.entrypoints=websecure"
+      - "traefik.http.routers.mbmd.tls.certresolver=myresolver"
+    devices:
+      #- /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A10KMGUT-if00-port0:/dev/ttyUSB1
+  mbmd_exporter:
+    build: .
+    ports:
+      - 9888:4567
+    restart: unless-stopped
+    environment:
+      - URL=https://internal.mbmd.klaut.io
