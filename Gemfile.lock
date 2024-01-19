@@ -4,6 +4,7 @@ GEM
     ethon (0.15.0)
       ffi (>= 1.15.0)
     ffi (1.15.4)
+    mqtt (0.6.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     oj (3.13.9)
@@ -25,6 +26,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  mqtt
   oj
   sinatra
   typhoeus
