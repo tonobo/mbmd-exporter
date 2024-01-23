@@ -78,8 +78,8 @@ if ENV["ENABLE_HASS_DISCOVERY"]
   Thread.new do
     cache = {}
     lookup_table = {
-      Export:         { unit: :Wh,  t: :total_increasing, c: :energy },
-      Import:         { unit: :Wh,  t: :total_increasing, c: :energy },
+      Export:         { unit: :kWh, t: :total_increasing, c: :energy },
+      Import:         { unit: :kWh, t: :total_increasing, c: :energy },
       Sum:            { unit: :kWh, t: :total_increasing, c: :energy },
       Cosphi:         {             t: :measurement,      c: :power_factor },
       Current:        { unit: :A,   t: :measurement,      c: :current },
@@ -105,7 +105,7 @@ if ENV["ENABLE_HASS_DISCOVERY"]
         uniq_id: "mbmd-exporter-bridge_#{device.gsub(".","-")}_#{[kind, phase].compact.join("-").downcase}",
         dev_cla: lookup_table.dig(kind, :c), 
         stat_cla: lookup_table.dig(kind, :t),
-        exp_aft: 10,
+        exp_aft: 60,
         dev: { name: device, ids: device.gsub(".","-"), cu: URL, mf: "mbmd", mdl: device },
       }
 
