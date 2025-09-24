@@ -34,7 +34,12 @@ func main() {
 	}
 
 	if *hassEnable {
-		go startHassDiscovery(*mqttHost, *mqttTopic, *cleanSession, *resumeSubs, *connectTimeout, *maxReconnect, *url)
+		go func() {
+			err := startHassDiscovery(*mqttHost, *mqttTopic, *cleanSession, *resumeSubs, *connectTimeout, *maxReconnect, *url)
+			if err != nil {
+				log.Fatalf(err.Error())
+			}
+		}()
 	}
 
 	collector := NewMBMDCollector(*url, 5*time.Second, *mbmdYaml)

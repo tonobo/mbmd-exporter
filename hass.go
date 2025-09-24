@@ -17,7 +17,7 @@ type hassLookup struct {
 	DevClass   string `json:"device_class,omitempty"`
 }
 
-func startHassDiscovery(mqttHost, mqttTopic string, cleanSession, resumeSubs bool, connectTimeout, maxReconnect time.Duration, url string) {
+func startHassDiscovery(mqttHost, mqttTopic string, cleanSession, resumeSubs bool, connectTimeout, maxReconnect time.Duration, url string) error {
 	lookup := map[string]hassLookup{
 		"Export":        {Unit: "kWh", StateClass: "total_increasing", DevClass: "energy"},
 		"Import":        {Unit: "kWh", StateClass: "total_increasing", DevClass: "energy"},
@@ -133,9 +133,9 @@ func startHassDiscovery(mqttHost, mqttTopic string, cleanSession, resumeSubs boo
 	client := mqtt.NewClient(opts)
 	token := client.Connect()
 	if token.Wait() && token.Error() != nil {
-		logger.Printf("failed to connect mqtt: %v", token.Error())
-		return
+		return fmt.Errorf("failed to connect mqtt: %v", token.Error())
 	}
 
 	logger.Printf("started MQTT Home Assistant discovery on %s", mqttHost)
+	return nil
 }
